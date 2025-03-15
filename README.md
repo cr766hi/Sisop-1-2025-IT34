@@ -95,4 +95,4 @@ awk 'BEGIN {FS=","; hitung_max=0}
 ```
 
 Output:
-
+![Screenshot](CODING/screenshot.png)
