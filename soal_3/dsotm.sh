@@ -1,8 +1,4 @@
-$ sudo apt update && sudo apt install -y curl jq
-
-$ nano dsotm.sh
-
-$ chmod +x dsotm.sh
+#!/bin/bash
 
 if [[ "$1" == --play=* ]]; then
     TRACK="${1#--play=}"
