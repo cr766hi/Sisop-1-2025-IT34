@@ -259,6 +259,8 @@ Output:
 ![Image](https://github.com/user-attachments/assets/2668cd08-7682-416a-8902-33fd07893872)
 ![Image](https://github.com/user-attachments/assets/d767596d-b520-43eb-84f1-d00b8a240d65)
 
+Untuk bagian D dan E masih belum selesai dikarenakan ketidakpahaman
+
 ## 4. pokemon_analysis.sh
 Pada suatu hari, anda diminta teman anda untuk membantunya mempersiapkan diri untuk turnamen Pokemon “Generation 9 OverUsed 6v6 Singles” dengan cara membuatkan tim yang cocok untuknya. Tetapi, anda tidak memahami meta yang dimainkan di turnamen tersebut. Untungnya, seorang informan memberikan anda data pokemon_usage.csv yang bisa anda download dan analisis. 
 [Author: Amoes / winter]
