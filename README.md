@@ -155,7 +155,108 @@ maka jika dijalankan akan menjalankan program untuk melakukan register dan file 
 
 ![image](https://github.com/user-attachments/assets/312ecfce-84bc-471d-bd52-0ed32a3140df)
 
+## 3. dsotm.sh
+Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat.
 
+```bash
+$ sudo apt update && sudo apt install -y curl jq
+```
+
+Buat sebuah *file* dsotm.sh
+
+```bash
+$ nano dsotm.sh
+```
+
+Simpan dan ubah *permission* *file* *script* agar dapat dieksekusi.
+
+```bash
+$ chmod +x dsotm.sh
+```
+
+Eksekusi *file script* dengan cara `./dsotm.sh --play=”<Track>”` dengan Track sebagai nama nama lagu yang kamu pilih.
+
+Buat sebuah fungsi untuk input argumen pertama
+
+```bash
+if [[ "$1" == --play=* ]]; then
+    TRACK="${1#--play=}"
+else
+    echo ""
+    exit 1
+fi
+```
+
+Gunakan switch case untuk conditional statement
+
+```bash
+case "$TRACK" in
+    "Speak To Me")
+        affirmation_text
+        ;;
+    "On the Run")
+        progress_bar
+        ;;
+    "Time")
+        jam
+        ;;
+    *)
+        echo "Judul tidak ditemukan: $TRACK"
+        exit 1
+        ;;
+esac
+```
+
+### a. Speak to Me
+Untuk lagu ini, kamu memutuskan untuk membuat sebuah fitur yang memanggil API yang baru saja kamu temukan kemarin, https://github.com/annthurium/affirmations untuk menampilkan word of affirmation setiap detik.
+
+```bash
+affirmation_text() {
+clear
+    while true; do
+        curl -s https://www.affirmations.dev/ | jq -r '.affirmation'
+        sleep 1
+    done
+}
+```
+Output:
+![Image](https://github.com/user-attachments/assets/ba860544-23b1-4e37-896d-d03f4849324c)
+
+### b. On the Run
+Selanjutnya, kamu memutuskan untuk membuat sebuah progress bar yang berjalan dengan interval random (setiap progress bertambah dalam interval waktu yang random dengan range 0.1 detik sampai 1 detik).
+
+```bash
+progress_bar() {
+    local width=$(tput cols)
+    local progress=0
+    local total=100
+    while [ $progress -le $total ]; do
+    local filled=$(( progress * width / total ))
+clear
+ printf "\r[%-${width}s] %d%%" "$(printf '#%.0s' $(seq 1 $filled))" "$progress"
+        sleep $(awk -v min=0.1 -v max=1 'BEGIN{srand(); print min+rand()*(max-min)}')
+        progress=$((progress + RANDOM % 5 + 1))
+    done
+}
+```
+Output:
+![Image](https://github.com/user-attachments/assets/f1b581a3-caaa-4b86-bf2d-75aa5c682ccb)
+
+### c. Time
+Singkat saja, untuk time, kamu memutuskan untuk membuat live clock yang menunjukkan tanggal, jam, menit dan detik. Untuk fungsionalitas, jam harus setidaknya menunjukkan tahun, bulan, tanggal, jam, menit, dan detik yang diperbaharui setiap detik.
+
+```bash
+jam() {
+    while true; do
+        clear
+        date '+%Y-%m-%d %H:%M:%S'
+        sleep 1
+    done
+}
+```
+Output:
+![Image](https://github.com/user-attachments/assets/2668cd08-7682-416a-8902-33fd07893872)
+![Image](https://github.com/user-attachments/assets/d767596d-b520-43eb-84f1-d00b8a240d65)
 
 ## 4. pokemon_analysis.sh
 Pada suatu hari, anda diminta teman anda untuk membantunya mempersiapkan diri untuk turnamen Pokemon “Generation 9 OverUsed 6v6 Singles” dengan cara membuatkan tim yang cocok untuknya. Tetapi, anda tidak memahami meta yang dimainkan di turnamen tersebut. Untungnya, seorang informan memberikan anda data pokemon_usage.csv yang bisa anda download dan analisis. 
