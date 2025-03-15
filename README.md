@@ -93,6 +93,3 @@ awk 'BEGIN {FS=","; hitung_max=0}
         }
     }' "$file"
 ```
-
-Output:
-![Screenshot](CODING/screenshot.png)
