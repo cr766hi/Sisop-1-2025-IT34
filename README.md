@@ -94,5 +94,5 @@ awk 'BEGIN {FS=","; hitung_max=0}
     }' "$file"
 ```
 
-Output :
+### Output :
 ![Screenshot 2025-03-14 155958](https://github.com/user-attachments/assets/c6134ffb-c3b1-4dd8-9f01-936daf261cba)
