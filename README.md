@@ -97,6 +97,64 @@ awk 'BEGIN {FS=","; hitung_max=0}
 ### Output :
 ![Screenshot 2025-03-14 155958](https://github.com/user-attachments/assets/c6134ffb-c3b1-4dd8-9f01-936daf261cba)
 
+## 2. Anda merupakan seorang “Observer”, dari banyak dunia yang dibuat dari ingatan yang berbentuk “fragments” - yang berisi kemungkinan yang dapat terjadi di dunia lain. Namun, akhir-akhir ini terdapat anomali-anomali yang seharusnya tidak terjadi, perpindahan “fragments” di berbagai dunia, yang kemungkinan terjadi dikarenakan seorang “Seeker” yang berubah menjadi “Ascendant”, atau dalam kata lain, “God”. Tidak semua “Observer” menjadi “Player”, tetapi disini anda ditugaskan untuk ikut serta dalam menjaga equilibrium dari dunia-dunia yang terbuat dari “Arcaea”. [Author: Nathan / etern1ty]
+### a. “First Step in a New World”
+Tugas pertama, dikarenakan kejadian “Axiom of The End” yang semakin mendekat, diperlukan sistem untuk mencatat “Player” aktif agar terpisah dari “Observer”. Buatlah dua shell script, login.sh dan register.sh, yang dimana database “Player” disimpan di /data/player.csv. Untuk register, parameter yang dipakai yaitu email, username, dan password. Untuk login, parameter yang dipakai yaitu email dan password.
+pertama buatlah sebuah file /data/player.csv dan juga file register.sh dan login.sh untuk menyimpan script.
+```bash
+mkdir soal_2 && cd soal_2 && touch register.sh && touch login.sh && mkdir data && mkdir player.csv 
+```
+### b. “Radiant Genesis”
+Sistem login/register untuk para "Player" tentunya memiliki constraint, yaitu validasi email dan password. 
+Email harus memiliki format yang benar dengan tanda @ dan titik, sementara password harus memiliki minimal 8 karakter, setidaknya satu huruf kecil, satu huruf besar, dan satu angka untuk menjaga keamanan data di dunia “Arcaea”.
+
+lalu edit register.sh
+
+```bash
+nano register.sh 
+```
+dan masukkan script ini
+
+```bash
+
+DATA_FILE="/data/player.csv"
+
+echo "Enter your email :"
+read email
+
+until [[ "$email" == *"@"* && "$email" == *"."* ]]; do
+echo "Email Is not valid"
+read -p "Enter your email again" email
+echo ""
+done
+
+if grep -q "^$email," "$DATA_FILE"; then
+    echo "Error: Email already registered!"
+    exit 1
+fi
+
+echo enter your username :
+read username
+
+echo enter your password :
+read password
+
+until [[ ${#password} -ge 8 && "$password" =~ [0-9] && "$password" =~ [a-zA-Z] ]]; do
+echo "Password must be at least 8 characters, contain at least 1 number, and 1 letter"
+read -p "Enter your password again" password
+echo ""
+done
+
+echo $email $username $password >> DATA_FILE
+```
+
+maka jika dijalankan akan menjalankan program untuk melakukan register dan file akan disimpan di DATA_FILE :
+![image](https://github.com/user-attachments/assets/0d05ec74-ec95-4372-82cd-31968de16285)
+
+![image](https://github.com/user-attachments/assets/312ecfce-84bc-471d-bd52-0ed32a3140df)
+
+
+
 ## 4. pokemon_analysis.sh
 Pada suatu hari, anda diminta teman anda untuk membantunya mempersiapkan diri untuk turnamen Pokemon “Generation 9 OverUsed 6v6 Singles” dengan cara membuatkan tim yang cocok untuknya. Tetapi, anda tidak memahami meta yang dimainkan di turnamen tersebut. Untungnya, seorang informan memberikan anda data pokemon_usage.csv yang bisa anda download dan analisis. 
 [Author: Amoes / winter]
