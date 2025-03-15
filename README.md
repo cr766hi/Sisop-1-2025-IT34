@@ -176,6 +176,7 @@ $ chmod +x dsotm.sh
 
 Eksekusi *file script* dengan cara `./dsotm.sh --play=”<Track>”` dengan Track sebagai nama nama lagu yang kamu pilih.
 
+
 Buat sebuah fungsi untuk input argumen pertama
 
 ```bash
