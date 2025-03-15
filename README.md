@@ -6,7 +6,22 @@
 
 </div>
 
-# 1. poppo_siroyo.sh
+## 1. poppo_siroyo.sh
 Di sebuah desa kecil yang dikelilingi bukit hijau, Poppo dan Siroyo, dua sahabat karib, sering duduk di bawah pohon tua sambil membayangkan petualangan besar. Poppo, yang ceria dan penuh semangat, baru menemukan kesenangan dalam dunia buku, sementara Siroyo, dengan otaknya yang tajam, suka menganalisis segala hal. Suatu hari, mereka menemukan tablet ajaib berisi catatan misterius bernama reading_data.csv. Dengan bantuan keajaiban awk, mereka memutuskan untuk menjelajahi rahasia di balik data itu, siap menghadapi tantangan demi tantangan dalam petualangan baru mereka.
-## a. Chris Hemsworth membaca 56 buku
+### a. Chris Hemsworth membaca 56 buku
 Poppo baru saja mulai melihat tablet ajaib dan terpukau dengan kekerenan orang bernama “Chris Hemsworth”. Poppo jadi sangat ingin tahu berapa banyak buku yang dibaca oleh “Chris Hemsworth”. Bantu Poppo menghitung jumlah baris di tablet ajaib yang menunjukkan buku-buku yang dibaca oleh Chris Hemsworth.
+
+```bash
+#!/bin/bash
+
+file="/home/na-ux315/reading_data.csv"
+
+awk 'BEGIN {FS=","; hitung=0}
+    /Chris Hemsworth/ {hitung++}
+    END {
+        if (hitung > 0)
+            print "Chris Hemsworth membaca", hitung, "buku";
+        else
+            print "Chris Hemsworth tidak membaca buku.";
+    }' "$file"
+```
