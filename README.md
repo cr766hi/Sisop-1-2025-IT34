@@ -96,3 +96,223 @@ awk 'BEGIN {FS=","; hitung_max=0}
 
 ### Output :
 ![Screenshot 2025-03-14 155958](https://github.com/user-attachments/assets/c6134ffb-c3b1-4dd8-9f01-936daf261cba)
+
+## 4. pokemon_analysis.sh
+Pada suatu hari, anda diminta teman anda untuk membantunya mempersiapkan diri untuk turnamen Pokemon “Generation 9 OverUsed 6v6 Singles” dengan cara membuatkan tim yang cocok untuknya. Tetapi, anda tidak memahami meta yang dimainkan di turnamen tersebut. Untungnya, seorang informan memberikan anda data pokemon_usage.csv yang bisa anda download dan analisis. 
+[Author: Amoes / winter]
+Data tersebut memiliki banyak kolom:
+a. Nama Pokemon
+b. Usage% yang merupakan persentase Pokemon yang disesuaikan dengan Rank pengguna dan Winrate
+c. Raw Usage yang merupakan jumlah mentah Pokemon dalam semua tim yang tercatat
+d. Type1 dan Type2 Pokemon
+e. Statistic Pokemon: HP,Atk,Def,SpAtk,SpDef,Speed
+
+```bash
+wget "https://drive.usercontent.google.com/u/0/uc?id=1n-2n_ZOTMleqa8qZ2nB8ALAbGFyN4-LJ&export=download" -O pokemon_usage.csv
+```
+
+Buat sebuah *file* player_analysis.sh
+
+```bash
+$ nano player_analysis.sh
+```
+
+Simpan dan ubah *permission* *file* *script* agar dapat dieksekusi.
+
+```bash
+$ chmod +x player_analysis.sh
+```
+
+Eksekusi *file script* dengan cara `./player_analysis.sh`.
+
+### a. Melihat summary dari data
+Untuk mengetahui Pokemon apa yang sedang membawa teror kepada lingkungan “Generation 9 OverUsed” anda berusaha untuk membuat sebuah fitur untuk menampilkan nama Pokemon dengan Usage% dan RawUsage paling tinggi. 
+untuk itu 
+```bash
+$ nano player_analysis.sh
+```
+untuk mengedit scripts yang akan dimasukkan, dan ketikkan :
+```bash
+if [ "$2" == "--info" ]; then
+    TOP_USAGE=$(tail -n +2 "$FILE" | sort -t, -k2 -nr | head -1 | awk -F, '{print $1 " (" $2 "%)"}')
+    TOP_RAW=$(tail -n +2 "$FILE" | sort -t, -k3 -nr | head -1 | awk -F, '{print $1 " (" $3 " uses)"}')
+
+    echo " Pokémon Usage Summary"
+    echo "=============================="
+    echo " Most Popular Pokemon: $TOP_USAGE"
+    echo " Most Used Pokémon: $TOP_RAW"
+    echo "=============================="
+    exit 0
+fi
+```
+Jalankan perintah untuk menampilkan outputnya 
+```bash
+./pokemon_analysis.sh pokemon_usage.csv --info
+```
+maka akan menghasilkan output :
+![image](https://github.com/user-attachments/assets/e31bd67f-04ce-4832-92c4-ffd96f6d117e)
+
+### b. Mengurutkan Pokemon berdasarkan data kolom
+Untuk memastikan bahwa anda mengetahui kondisi lingkungan “Generation 9 OverUsed”, anda berusaha untuk membuat sebuah fitur untuk sort berdasarkan:
+a. Usage%
+b. RawUsage
+c. Nama
+d. HP
+e. Atk
+f. Def
+g. Sp.Atk
+h. Sp.Def
+i. Speed
+j. Sort
+dilakukan dengan urutan descending untuk semua angka selain nama, yang diurutkan secara alphabetical. Output harus sesuai dengan format csv yang diberikan.
+untuk itu 
+```bash
+$ nano player_analysis.sh
+```
+untuk mengedit scripts yang akan dimasukkan, dan ketikkan :
+```bash
+fi
+
+if [ "$2" == "--sort" ]; then
+    if [ -z "$3" ]; then
+        echo "masukkan kolom yang ingin diurutkan"
+        exit 1
+    fi
+
+    echo "Mengurutkan Pokemon berdasarkan '$3'..."
+    head -n 1 "$FILE"
+
+    case "$3" in
+        usage)  COL=2 ;;
+        raw)    COL=3 ;;
+        name)   COL=1 ;;
+        hp)     COL=6 ;;
+        atk)    COL=7 ;;
+        def)    COL=8 ;;
+        spatk)  COL=9 ;;
+        spdef)  COL=10 ;;
+        speed)  COL=11 ;;
+        *)
+            echo "Kolom tidak valid!"
+            exit 1
+            ;;
+    esac
+
+    if [ "$3" == "name" ]; then
+        tail -n +2 "$FILE" | sort -t, -k"$COL"
+    else
+        tail -n +2 "$FILE" | sort -t, -k"$COL" -nr
+    fi
+    exit 0
+fi
+```
+Jalankan perintah untuk menampilkan outputnya 
+```bash
+./pokemon_analysis.sh pokemon_usage.csv --info
+```
+maka akan menghasilkan output :
+![image](https://github.com/user-attachments/assets/138313a8-d36b-4955-b82c-8912502bc4a2)
+
+### c. Mencari nama Pokemon tertentu
+Setelah mengetahui kondisi lingkungan “Generation 9 OverUsed”, anda ingin mencari tahu statistik penggunaan dari beberapa Pokemon yang mungkin dapat bertanding baik melawan sebagian besar Pokemon yang ada di Top 10 usage. Oleh karena itu, anda membuat fitur search berdasarkan nama Pokemon. Pastikan agar search yang dimasukkan tidak memunculkan hasil yang tidak diinginkan (seperti memunculkan semua Grass type ketika mengetik search “Grass”), dan output harus sesuai dengan format csv yang diberikan dengan sort Usage%.
+untuk itu 
+```bash
+$ nano player_analysis.sh
+```
+untuk mengedit scripts yang akan dimasukkan, dan ketikkan :
+```bash
+if [ "$2" == "--grep" ]; then
+    if [ -z "$3" ]; then
+        echo "Masukkan nama Pokémon yang ingin dicari"
+        exit 1
+    fi
+
+    echo "Mencari Pokemon '$3'..."
+    echo "Pokemon,Usage%,RawUsage,Type1,Type2,HP,Atk,Def,SpAtk,SpDef,Speed"
+
+    grep -i "$3" "$1" | sort -t, -k2 -nr || echo "Pokemon '$3' tidak ditemukan"
+
+    exit 0
+fi
+```
+Jalankan perintah untuk menampilkan outputnya 
+```bash
+./pokemon_analysis.sh pokemon_usage.csv --grep <nama pokemon>
+```
+maka akan menghasilkan output :
+![image](https://github.com/user-attachments/assets/b11d07c7-b698-4caa-9408-f125967c1816)
+
+### d. Mencari Pokemon berdasarkan filter nama type
+Agar dapat membuat tim yang baik, anda perlu memikirkan kombinasi yang baik dari beberapa Pokemon, hal ini disebut sebagai “core” oleh komunitas Pokemon! Oleh karena itu, anda berpikiran untuk membuat fitur filter berdasarkan Type sebuah Pokemon. Output harus sesuai dengan format csv yang diberikan dengan sort Usage%
+
+```bash
+$ nano player_analysis.sh
+```
+untuk mengedit scripts yang akan dimasukkan, dan ketikkan :
+```bash
+if [ "$2" == "--filter" ]; then
+    if [ -z "$3" ]; then
+        echo "Harap masukkan tipe Pokémon yang ingin difilter"
+        exit 1
+    fi
+
+    echo "Mencari Pokemon dengan Type '$3'..."
+    head -n 1 "$FILE"
+    tail -n +2 "$FILE" | grep -i ",$3\|,$3," | sort -t, -k2 -nr
+    exit 0
+fi
+```
+Jalankan perintah untuk menampilkan outputnya 
+```bash
+./pokemon_analysis.sh pokemon_usage.csv --grep <type pokemon>
+```
+maka akan menghasilkan output :
+![image](https://github.com/user-attachments/assets/afbbcddf-107a-4cda-bb69-e0c78a01ffb5)
+
+### e. Error handling
+Pastikan program yang anda buat mengecek semua kesalahan pengguna agar dapat memberikan kejelasan kepada pengguna pada setiap kasus.
+
+```bash
+$ nano player_analysis.sh
+```
+untuk mengedit scripts yang akan dimasukkan, dan ketikkan :
+```bash
+VALID_COMMANDS=("--info" "--sort" "--grep" "--filter")
+if [[ ! " ${VALID_COMMANDS[@]} " =~ " $2 " ]]; then
+    echo "Perintah '$2' tidak dikenali!"
+    echo "Gunakan -h atau --help untuk informasi lebih lanjut."
+    exit 1
+fi
+```
+Jalankan perintah untuk menampilkan outputnya(coba asal)
+```bash
+./pokemon_analysis.sh pokemon_usage.csv --kmlkm
+```
+maka akan menghasilkan output :
+![image](https://github.com/user-attachments/assets/b7e97656-2194-43bc-88ca-c2290743100e)
+
+### f. Help screen yang menarik
+Untuk memberikan petunjuk yang baik pada pengguna program, anda berpikir untuk membuat sebuah help screen yang muncul ketika mengetik -h atau --help sebagai command yang dijalankan. Kriteria yang harus ada dalam help screen pada program ini adalah:
+ASCII Art yang menarik! Gunakan kreativitas anda untuk mencari/membuat art yang cocok untuk program yang sudah anda buat!
+Penjelasan setiap command dan sub-command
+
+edit kembali player_analysis.sh dengan script dibawah ini dan masukkan script dibawah ini :
+
+![image](https://github.com/user-attachments/assets/334cfe5d-e186-43c3-b6fd-3a3c43aa9087)
+dan outputnya akan seperti ini
+![image](https://github.com/user-attachments/assets/440742c5-ca20-43d5-918c-33782a0e8abc)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
