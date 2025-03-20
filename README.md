@@ -463,7 +463,7 @@ Penjelasan setiap command dan sub-command
 edit kembali player_analysis.sh dengan script dibawah ini dan masukkan script dibawah ini :
 
 ![image](https://github.com/user-attachments/assets/334cfe5d-e186-43c3-b6fd-3a3c43aa9087)
-dan outputnya akan seperti ini
+### Output :
 ![image](https://github.com/user-attachments/assets/440742c5-ca20-43d5-918c-33782a0e8abc)
 
 
