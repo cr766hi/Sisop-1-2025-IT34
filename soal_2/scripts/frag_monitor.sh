@@ -17,7 +17,7 @@ USED_RAM_MB=$((USED_RAM / 1024))
 RAM_USAGE_PERCENT=$((USED_RAM * 100 / TOTAL_RAM))
 
 # Tampilkan informasi ke "Player"
-echo "💾 Total RAM    : ${TOTAL_RAM_MB} MB"
-echo "📊 RAM Usage    : ${USED_RAM_MB} MB (${RAM_USAGE_PERCENT}%)"
+echo " Total RAM    : ${TOTAL_RAM_MB} MB"
+echo " RAM Usage    : ${USED_RAM_MB} MB (${RAM_USAGE_PERCENT}%)"
 
 exit 0
