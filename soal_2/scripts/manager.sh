@@ -4,7 +4,6 @@ CRON_FILE="$HOME/cron_jobs"
 CPU_SCRIPT="$(pwd)/scripts/core_monitor.sh"
 RAM_SCRIPT="$(pwd)/scripts/frag_monitor.sh"
 
-# Function untuk membuat kotak dengan teks
 draw_box() {
     local text="$1"
     local width=$(( ${#text} + 4 ))
@@ -13,12 +12,10 @@ draw_box() {
     printf "╚$(printf '═%.0s' $(seq 1 $width))╝\033[0m\n\n"
 }
 
-# Menyimpan crontab saat ini ke file sementara
 update_cron() {
     crontab -l > "$CRON_FILE" 2>/dev/null
 }
 
-# Menambahkan job ke crontab (dijalankan setiap menit: * * * * *)
 add_cron_job() {
     local script_path="$1"
 
@@ -33,7 +30,6 @@ add_cron_job() {
     draw_box "✅ Job added successfully!"
 }
 
-# Menghapus job dari crontab
 remove_cron_job() {
     local script_path="$1"
 
@@ -48,13 +44,11 @@ remove_cron_job() {
     draw_box "🗑 Job removed successfully!"
 }
 
-# Menampilkan semua job crontab
 view_jobs() {
     draw_box "=== Active Cron Jobs ==="
     crontab -l || draw_box "⚠️ No scheduled monitoring jobs"
 }
 
-# Menu utama
 while true; do
     clear
     echo "╔═════════════════════════════════════════════════════╗"
