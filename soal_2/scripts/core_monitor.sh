@@ -1,13 +1,11 @@
 #!/bin/bash
 
-echo "=== Arcaea Core Monitoring ==="
+LOG_FILE="./logs/core.log"
+TIMESTAMP=$(date "+[%Y-%m-%d %H:%M:%S]")
 
-CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8}')
+# Ambil penggunaan CPU dalam persen
+CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+CPU_MODEL=$(lscpu | grep "Model name" | sed -E 's/Model name:\s+//')
 
-CPU_MODEL=$(grep -m 1 "model name" /proc/cpuinfo | cut -d ':' -f2 | sed 's/^ //')
-
-echo " CPU Model  : $CPU_MODEL"
-echo " CPU Usage  : $CPU_USAGE%"
-
-exit 0
-
+# Simpan log dengan format yang sesuai
+echo "$TIMESTAMP -- Core Usage [$(printf "%.5f" "$CPU_USAGE")%] -- Terminal Model [$CPU_MODEL]" >> "$LOG_FILE"
