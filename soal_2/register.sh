@@ -1,13 +1,13 @@
 #!/bin/bash
 
 DATA_FILE="/data/player.csv"
-SALT="arcaea123"  # Static salt untuk hashing
+SALT="arcaea123"  
 
 sudo mkdir -p /data
 
 if [ ! -f "$DATA_FILE" ]; then
     echo "email,username,hashed_password" | sudo tee "$DATA_FILE" > /dev/null
-    sudo chmod 666 "$DATA_FILE"  # Beri izin baca/tulis ke semua user
+    sudo chmod 666 "$DATA_FILE" 
 fi
 
 echo "Enter your email :"
