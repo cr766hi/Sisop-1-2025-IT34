@@ -236,7 +236,7 @@ CPU_Model=$(lscpu | grep 'Model name' | awk -F': ' '{print $2}' | xargs)
 echo "[$(date +'%Y-%m-%d %H:%M:%S')] - Core Usage [$CPU_Usage] - Terminal Model [$CPU_Model]" >> "$BASE_DIR/core.log"
 ```
 
-### e. “In Grief and Great Delight”
+### f. “In Grief and Great Delight”
 Selain CPU, “fragments” juga perlu dipantau untuk memastikan equilibrium dunia “Arcaea”. RAM menjadi representasi dari “fragments” di dunia “Arcaea”, yang dimana dipantau dalam persentase usage, dan juga penggunaan RAM sekarang. 
 Lokasi shell script: ./scripts/frag_monitor.sh
 Pastikan perhitungan kalian untuk CPU dan RAM memiliki output yang sama dengan suatu package resource checker, ex: top, htop, btop, bpytop.
@@ -247,6 +247,34 @@ nano frag_monitor.sh
 ```
 lalu edit shell :
 ```bash
+#!/bin/bash
+
+LOG_FILE="./logs/fragment.log"
+TIMESTAMP=$(date "+[%Y-%m-%d %H:%M:%S]")
+
+TOTAL_RAM=$(free -m | awk '/Mem:/ {print $2}')
+USED_RAM=$(free -m | awk '/Mem:/ {print $3}')
+AVAILABLE_RAM=$(free -m | awk '/Mem:/ {print $7}')
+RAM_USAGE=$(awk "BEGIN {print ($USED_RAM/$TOTAL_RAM)*100}")
+
+echo "$TIMESTAMP -- Fragment Usage [$(printf "%.2f" "$RAM_USAGE")%] -- Fragment Count [${USED_RAM}.00 MB] -- Details [Total: ${TOTAL_RAM} MB, Available: ${AVAILABLE_RAM} MB]" >> "$LOG_FILE"
+```
+
+Code ini dijalankan untuk mengetahui berapa total ram, ram yang tesedia, dan ram yang sedang dipakai
+
+### g. “On Fate's Approach”
+Pemantauan yang teratur dan terjadwal sangat penting untuk mendeteksi anomali. Crontab manager (suatu menu) memungkinkan "Player" untuk mengatur jadwal pemantauan sistem. 
+Hal yang harus ada di fungsionalitas menu:
+Add/Remove CPU [Core] Usage
+Add/Remove RAM [Fragment] Usage
+View Active Jobs
+Lokasi shell script: ./scripts/manager.sh
+
+untuk itu pertama membuat shell manager.sh
+dan edit dengan kode dibawah ini :
+```bash
+
+
 
 
 ## 3. dsotm.sh
