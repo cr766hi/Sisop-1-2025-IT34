@@ -103,7 +103,7 @@ Dari banyak dunia yang dibuat dari ingatan yang berbentuk “fragments” - yang
 
 ### a. “First Step in a New World”
 Tugas pertama, dikarenakan kejadian “Axiom of The End” yang semakin mendekat, diperlukan sistem untuk mencatat “Player” aktif agar terpisah dari “Observer”. Buatlah dua shell script, login.sh dan register.sh, yang dimana database “Player” disimpan di /data/player.csv. Untuk register, parameter yang dipakai yaitu email, username, dan password. Untuk login, parameter yang dipakai yaitu email dan password.
-pertama buatlah sebuah file /data/player.csv dan juga file register.sh dan login.sh untuk menyimpan script.
+pertama buatlah sebuah file `/data/player.csv` dan juga file `register.sh` dan `login.sh` untuk menyimpan script.
 
 ```bash
 mkdir soal_2 && cd soal_2 && touch register.sh && touch login.sh && mkdir data && mkdir player.csv 
@@ -279,7 +279,7 @@ Add/Remove RAM [Fragment] Usage
 View Active Jobs
 Lokasi shell script: `./scripts/manager.sh`
 
-untuk itu pertama membuat shell manager.sh
+untuk itu pertama membuat shell `manager.sh`
 dan edit dengan kode dibawah ini :
 
 ```bash
@@ -287,8 +287,26 @@ dan edit dengan kode dibawah ini :
 ```
 Dengan lokasi shell script: `./scripts/manager.sh`
 
+### Output
+
 ### h. “The Disfigured Flow of Time”
 Karena tentunya script yang dimasukkan ke crontab tidak mengeluarkan output di terminal, buatlah 2 log file, core.log dan fragment.log di folder ./log/, yang dimana masing-masing terhubung ke program usage monitoring untuk usage tersebut.
+
+Format log:
+CPU
+[YYYY-MM-DD HH:MM:SS] - Core Usage [$CPU%] - Terminal Model [$CPU_Model]
+
+RAM
+[YYYY-MM-DD HH:MM:SS] - Fragment Usage [$RAM%] - Fragment Count [$RAM MB] - Details [Total: $TOTAL MB, Available: $AVAILABLE MB]
+
+Edit dengan kode dibawah ini :
+
+```bash
+
+```
+
+### Output
+
 
 ### i. “Irruption of New Color”
 Sistem harus memiliki antarmuka utama yang menggabungkan semua komponen. Ini akan menjadi titik masuk bagi "Player" untuk mengakses seluruh sistem. 
@@ -311,6 +329,9 @@ Edit dengan kode dibawah ini :
 ```bash
 
 ```
+
+### Output
+
 
 ## 3. dsotm.sh
 Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat.
