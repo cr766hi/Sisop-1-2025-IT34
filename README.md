@@ -99,27 +99,29 @@ awk 'BEGIN {FS=","; hitung_max=0}
 ![Screenshot 2025-03-14 155958](https://github.com/user-attachments/assets/c6134ffb-c3b1-4dd8-9f01-936daf261cba)
 
 ## 2. Anda merupakan seorang “Observer”
-dari banyak dunia yang dibuat dari ingatan yang berbentuk “fragments” - yang berisi kemungkinan yang dapat terjadi di dunia lain. Namun, akhir-akhir ini terdapat anomali-anomali yang seharusnya tidak terjadi, perpindahan “fragments” di berbagai dunia, yang kemungkinan terjadi dikarenakan seorang “Seeker” yang berubah menjadi “Ascendant”, atau dalam kata lain, “God”. Tidak semua “Observer” menjadi “Player”, tetapi disini anda ditugaskan untuk ikut serta dalam menjaga equilibrium dari dunia-dunia yang terbuat dari “Arcaea”. [Author: Nathan / etern1ty]
+Dari banyak dunia yang dibuat dari ingatan yang berbentuk “fragments” - yang berisi kemungkinan yang dapat terjadi di dunia lain. Namun, akhir-akhir ini terdapat anomali-anomali yang seharusnya tidak terjadi, perpindahan “fragments” di berbagai dunia, yang kemungkinan terjadi dikarenakan seorang “Seeker” yang berubah menjadi “Ascendant”, atau dalam kata lain, “God”. Tidak semua “Observer” menjadi “Player”, tetapi disini anda ditugaskan untuk ikut serta dalam menjaga equilibrium dari dunia-dunia yang terbuat dari “Arcaea”.
 
 ### a. “First Step in a New World”
 Tugas pertama, dikarenakan kejadian “Axiom of The End” yang semakin mendekat, diperlukan sistem untuk mencatat “Player” aktif agar terpisah dari “Observer”. Buatlah dua shell script, login.sh dan register.sh, yang dimana database “Player” disimpan di /data/player.csv. Untuk register, parameter yang dipakai yaitu email, username, dan password. Untuk login, parameter yang dipakai yaitu email dan password.
 pertama buatlah sebuah file /data/player.csv dan juga file register.sh dan login.sh untuk menyimpan script.
+
 ```bash
 mkdir soal_2 && cd soal_2 && touch register.sh && touch login.sh && mkdir data && mkdir player.csv 
 ```
+
 ### b. “Radiant Genesis”
 Sistem login/register untuk para "Player" tentunya memiliki constraint, yaitu validasi email dan password. 
 Email harus memiliki format yang benar dengan tanda @ dan titik, sementara password harus memiliki minimal 8 karakter, setidaknya satu huruf kecil, satu huruf besar, dan satu angka untuk menjaga keamanan data di dunia “Arcaea”.
 
-lalu edit register.sh
+lalu edit `register.sh`
 
 ```bash
 nano register.sh 
 ```
+
 dan masukkan script ini
 
 ```bash
-
 #!/bin/bash
 
 DATA_FILE="/data/player.csv"
@@ -169,15 +171,12 @@ maka jika dijalankan akan menjalankan program untuk melakukan register dan file 
 ![image](https://github.com/user-attachments/assets/6e0d99d7-9c4f-4e8c-a603-2c141a005ce8)
 
 dan jika kita cek file /data/player.csv maka :
-
 ![image](https://github.com/user-attachments/assets/92088329-645e-4101-8234-f010ba6439e2)
 
 File telah dimasukkan :
-
 ![image](https://github.com/user-attachments/assets/5b313f83-5cbe-4a3f-b7d5-2420a3bb7d31)
 
 dan ketika memasukkan email tidak valid dan password yang tidak sesuai regulasi maka :
-
 ![image](https://github.com/user-attachments/assets/8b1f58ae-9bc2-4ff3-8f50-b30f987c6438)
 ![image](https://github.com/user-attachments/assets/48577bda-5617-410f-a72e-f16417f31911)
 
@@ -186,12 +185,14 @@ Karena diperlukan pengecekan keaslian “Player” yang aktif, maka diperlukan s
 
 Masukkan kode ini dalam register.sh :
 ini untuk mengecek apkaah email sudah ada atau belum
+
 ```bash
 if grep -q "^$email," "$DATA_FILE"; then
     echo "Error: Email already registered!"
     exit 1
 fi
 ```
+
 Ketika mencoba memasukkan email yang sudah terdaftar maka :
 ![image](https://github.com/user-attachments/assets/fcf9a572-98cd-44fa-a51a-9c63c6f20255)
 
@@ -203,24 +204,28 @@ untuk melakukan hash password dapat membuat kode ini pada login.sh dan register.
 ```bash
 hashed_password=$(echo -n "$SALT$password" | sha256sum | awk '{print $1}')
 ```
-dan jika dilihat passwordnya akan menjadi seperti ini :
 
+dan jika dilihat passwordnya akan menjadi seperti ini :
 ![image](https://github.com/user-attachments/assets/db4d6079-2830-4d1f-ace0-6212410a336f)
 
 ### e. “The Brutality of Glass”
 Setelah sukses login, "Player" perlu memiliki akses ke sistem pemantauan sumber daya. Sistem harus dapat melacak penggunaan CPU (dalam persentase) yang menjadi representasi “Core” di dunia “Arcaea”. Pastikan kalian juga bisa melacak “terminal” yang digunakan oleh “Player”, yaitu CPU Model dari device mereka. 
-Lokasi shell script: ./scripts/core_monitor.sh
-Hint: bash - How to get overall CPU usage (e.g. 57%) on Linux - Stack Overflow
+Lokasi shell script: `./scripts/core_monitor.sh`
 
 untuk itu pertama membuat directory dalam soal_2 dengan :
+
 ```bash
 mkdir scripts
 ```
-lalu buat shell bernama core_monitor.sh dengan
+
+lalu buat shell bernama `core_monitor.sh` dengan
+
 ```bash
 nano core_monitor.sh
 ```
+
 edit core_monitor.sh dan masukkan :
+
 ```bash
 #!/bin/sh
 
@@ -239,14 +244,17 @@ echo "[$(date +'%Y-%m-%d %H:%M:%S')] - Core Usage [$CPU_Usage] - Terminal Model 
 
 ### f. “In Grief and Great Delight”
 Selain CPU, “fragments” juga perlu dipantau untuk memastikan equilibrium dunia “Arcaea”. RAM menjadi representasi dari “fragments” di dunia “Arcaea”, yang dimana dipantau dalam persentase usage, dan juga penggunaan RAM sekarang. 
-Lokasi shell script: ./scripts/frag_monitor.sh
+Lokasi shell script: `./scripts/frag_monitor.sh`
 Pastikan perhitungan kalian untuk CPU dan RAM memiliki output yang sama dengan suatu package resource checker, ex: top, htop, btop, bpytop.
 
-untuk itu buat shell frag_monitor.sh
+untuk itu buat shell `frag_monitor.sh`
+
 ```bash
 nano frag_monitor.sh
 ```
+
 lalu edit shell :
+
 ```bash
 #!/bin/bash
 
@@ -273,12 +281,36 @@ Lokasi shell script: `./scripts/manager.sh`
 
 untuk itu pertama membuat shell manager.sh
 dan edit dengan kode dibawah ini :
+
+```bash
+
+```
+Dengan lokasi shell script: `./scripts/manager.sh`
+
+### h. “The Disfigured Flow of Time”
+Karena tentunya script yang dimasukkan ke crontab tidak mengeluarkan output di terminal, buatlah 2 log file, core.log dan fragment.log di folder ./log/, yang dimana masing-masing terhubung ke program usage monitoring untuk usage tersebut.
+
+### i. “Irruption of New Color”
+Sistem harus memiliki antarmuka utama yang menggabungkan semua komponen. Ini akan menjadi titik masuk bagi "Player" untuk mengakses seluruh sistem. 
+
+Buat shell script `terminal.sh`
+
 ```bash
 
 ```
 
+Dalam shell script tersebut berisi user flow berikut:
+- Register
+- Login
+    - Crontab manager (add/rem core & fragment usage)
+    - Exit
+- Exit
 
+Edit dengan kode dibawah ini :
 
+```bash
+
+```
 
 ## 3. dsotm.sh
 Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat.
