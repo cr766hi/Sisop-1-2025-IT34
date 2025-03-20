@@ -1,24 +1,24 @@
 #!/bin/bash
 
 DATA_FILE="/data/player.csv"
+SALT="arcaea123"  # Static salt untuk hashing
 
-# Pastikan file database ada, jika tidak buat dengan header
+sudo mkdir -p /data
+
 if [ ! -f "$DATA_FILE" ]; then
-    echo "email,username,password" | sudo tee "$DATA_FILE" > /dev/null
+    echo "email,username,hashed_password" | sudo tee "$DATA_FILE" > /dev/null
     sudo chmod 666 "$DATA_FILE"  # Beri izin baca/tulis ke semua user
 fi
 
 echo "Enter your email :"
 read email
 
-# Validasi email
 until [[ "$email" == *"@"* && "$email" == *"."* ]]; do
     echo "Email is not valid"
     read -p "Enter your email again: " email
     echo ""
 done
 
-# Cek apakah email sudah terdaftar
 if grep -q "^$email," "$DATA_FILE"; then
     echo "Error: Email already registered!"
     exit 1
@@ -27,16 +27,17 @@ echo "Enter your username :"
 read username
 
 echo "Enter your password :"
-read password
+read -s password
 
 # Validasi password
 until [[ ${#password} -ge 8 && "$password" =~ [0-9] && "$password" =~ [a-zA-Z] ]]; do
     echo "Password must be at least 8 characters, contain at least 1 number, and 1 letter"
-    read -p "Enter your password again: " password
+    read -s -p "Enter your password again: " password
     echo ""
 done
 
-# Simpan data ke file CSV
-echo "$email,$username,$password" >> "$DATA_FILE"
+hashed_password=$(echo -n "$SALT$password" | sha256sum | awk '{print $1}')
+
+echo "$email,$username,$hashed_password" | sudo tee -a "$DATA_FILE" > /dev/null
 
 echo "Registration successful!"
