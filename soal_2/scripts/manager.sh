@@ -22,7 +22,7 @@ add_cron_job() {
     update_cron
     echo "$schedule bash $script_path" >> "$CRON_FILE"
     crontab "$CRON_FILE"
-    draw_box "✅ Job added successfully!"
+    draw_box "Job added successfully!"
 }
 
 remove_cron_job() {
@@ -30,7 +30,7 @@ remove_cron_job() {
     update_cron
     grep -v "$script_path" "$CRON_FILE" > "$CRON_FILE.tmp" && mv "$CRON_FILE.tmp" "$CRON_FILE"
     crontab "$CRON_FILE"
-    draw_box "🗑️ Job removed successfully!"
+    draw_box "🗑Job removed successfully!"
 }
 
 view_jobs() {
