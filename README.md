@@ -220,7 +220,7 @@ clear
     done
 }
 ```
-Output:
+### Output:
 ![Image](https://github.com/user-attachments/assets/ba860544-23b1-4e37-896d-d03f4849324c)
 
 ### b. On the Run
@@ -240,7 +240,7 @@ clear
     done
 }
 ```
-Output:
+### Output:
 ![Image](https://github.com/user-attachments/assets/f1b581a3-caaa-4b86-bf2d-75aa5c682ccb)
 
 ### c. Time
@@ -255,7 +255,7 @@ jam() {
     done
 }
 ```
-Output:
+### Output:
 ![Image](https://github.com/user-attachments/assets/2668cd08-7682-416a-8902-33fd07893872)
 ![Image](https://github.com/user-attachments/assets/d767596d-b520-43eb-84f1-d00b8a240d65)
 
