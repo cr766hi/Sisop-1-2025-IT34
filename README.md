@@ -1,4 +1,4 @@
-# Sisop-1-2025-IT34
+![image](https://github.com/user-attachments/assets/eff44492-580d-478f-bc60-55fa9bec1b2e)# Sisop-1-2025-IT34
 
 <div align=center>
 
@@ -119,41 +119,135 @@ dan masukkan script ini
 
 ```bash
 
+#!/bin/bash
+
 DATA_FILE="/data/player.csv"
+SALT="arcaea123"  # Static salt untuk hashing
+
+sudo mkdir -p /data
+
+if [ ! -f "$DATA_FILE" ]; then
+    echo "email,username,hashed_password" | sudo tee "$DATA_FILE" > /dev/null
+    sudo chmod 666 "$DATA_FILE"  # Beri izin baca/tulis ke semua user
+fi
 
 echo "Enter your email :"
 read email
 
 until [[ "$email" == *"@"* && "$email" == *"."* ]]; do
-echo "Email Is not valid"
-read -p "Enter your email again" email
-echo ""
+    echo "Email is not valid"
+    read -p "Enter your email again: " email
+    echo ""
 done
 
 if grep -q "^$email," "$DATA_FILE"; then
     echo "Error: Email already registered!"
     exit 1
 fi
-
-echo enter your username :
+echo "Enter your username :"
 read username
 
-echo enter your password :
-read password
+echo "Enter your password :"
+read -s password
 
+# Validasi password
 until [[ ${#password} -ge 8 && "$password" =~ [0-9] && "$password" =~ [a-zA-Z] ]]; do
-echo "Password must be at least 8 characters, contain at least 1 number, and 1 letter"
-read -p "Enter your password again" password
-echo ""
+    echo "Password must be at least 8 characters, contain at least 1 number, and 1 letter"
+    read -s -p "Enter your password again: " password
+    echo ""
 done
 
-echo $email $username $password >> DATA_FILE
+hashed_password=$(echo -n "$SALT$password" | sha256sum | awk '{print $1}')
+
+echo "$email,$username,$hashed_password" | sudo tee -a "$DATA_FILE" > /dev/null
+
+echo "Registration successful!"
 ```
 
-maka jika dijalankan akan menjalankan program untuk melakukan register dan file akan disimpan di DATA_FILE :
-![image](https://github.com/user-attachments/assets/0d05ec74-ec95-4372-82cd-31968de16285)
+maka jika dijalankan akan menjalankan program untuk melakukan register dan file akan disimpan di /data/player.csv :
+![image](https://github.com/user-attachments/assets/6e0d99d7-9c4f-4e8c-a603-2c141a005ce8)
 
-![image](https://github.com/user-attachments/assets/312ecfce-84bc-471d-bd52-0ed32a3140df)
+dan jika kita cek file /data/player.csv maka :
+
+![image](https://github.com/user-attachments/assets/92088329-645e-4101-8234-f010ba6439e2)
+
+File telah dimasukkan :
+
+![image](https://github.com/user-attachments/assets/5b313f83-5cbe-4a3f-b7d5-2420a3bb7d31)
+
+dan ketika memasukkan email tidak valid dan password yang tidak sesuai regulasi maka :
+
+![image](https://github.com/user-attachments/assets/8b1f58ae-9bc2-4ff3-8f50-b30f987c6438)
+![image](https://github.com/user-attachments/assets/48577bda-5617-410f-a72e-f16417f31911)
+
+### c. “Unceasing Spirit”
+Karena diperlukan pengecekan keaslian “Player” yang aktif, maka diperlukan sistem untuk pencegahan duplikasi “Player”. Jadikan sistem login/register tidak bisa memakai email yang sama (email = unique), tetapi tidak ada pengecekan tambahan untuk username. 
+
+Masukkan kode ini dalam register.sh :
+ini untuk mengecek apkaah email sudah ada atau belum
+```bash
+if grep -q "^$email," "$DATA_FILE"; then
+    echo "Error: Email already registered!"
+    exit 1
+fi
+```
+Ketika mencoba memasukkan email yang sudah terdaftar maka :
+![image](https://github.com/user-attachments/assets/fcf9a572-98cd-44fa-a51a-9c63c6f20255)
+
+### d. “The Eternal Realm of Light”
+Password adalah kunci akses ke dunia Arcaea. Untuk menjaga keamanan "Player", password perlu disimpan dalam bentuk yang tidak mudah diakses. Gunakan algoritma hashing sha256sum yang memakai static salt (bebas).
+
+untuk melakukan hash password dapat membuat kode ini pada login.sh dan register.sh agar keduanya dapat mengenali password yang sudah dihashing :
+
+```bash
+hashed_password=$(echo -n "$SALT$password" | sha256sum | awk '{print $1}')
+```
+dan jika dilihat passwordnya akan menjadi seperti ini :
+
+![image](https://github.com/user-attachments/assets/db4d6079-2830-4d1f-ace0-6212410a336f)
+
+### e. “The Brutality of Glass”
+Setelah sukses login, "Player" perlu memiliki akses ke sistem pemantauan sumber daya. Sistem harus dapat melacak penggunaan CPU (dalam persentase) yang menjadi representasi “Core” di dunia “Arcaea”. Pastikan kalian juga bisa melacak “terminal” yang digunakan oleh “Player”, yaitu CPU Model dari device mereka. 
+Lokasi shell script: ./scripts/core_monitor.sh
+Hint: bash - How to get overall CPU usage (e.g. 57%) on Linux - Stack Overflow
+
+untuk itu pertama membuat directory dalam soal_2 dengan :
+```bash
+mkdir scripts
+```
+lalu buat shell bernama core_monitor.sh dengan
+```bash
+nano core_monitor.sh
+```
+edit core_monitor.sh dan masukkan :
+```bash
+#!/bin/sh
+
+DIR=$(realpath $(dirname $0))
+BASE_DIR=$(realpath "$DIR/../logs")
+
+if [ ! -d "$BASE_DIR" ]; then
+    mkdir -p "$BASE_DIR"
+fi
+
+CPU_Usage=$(top -bn2 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}' | awk 'NR==2 {print $0}' )
+CPU_Model=$(lscpu | grep 'Model name' | awk -F': ' '{print $2}' | xargs)
+
+echo "[$(date +'%Y-%m-%d %H:%M:%S')] - Core Usage [$CPU_Usage] - Terminal Model [$CPU_Model]" >> "$BASE_DIR/core.log"
+```
+
+### e. “In Grief and Great Delight”
+Selain CPU, “fragments” juga perlu dipantau untuk memastikan equilibrium dunia “Arcaea”. RAM menjadi representasi dari “fragments” di dunia “Arcaea”, yang dimana dipantau dalam persentase usage, dan juga penggunaan RAM sekarang. 
+Lokasi shell script: ./scripts/frag_monitor.sh
+Pastikan perhitungan kalian untuk CPU dan RAM memiliki output yang sama dengan suatu package resource checker, ex: top, htop, btop, bpytop.
+
+untuk itu buat shell frag_monitor.sh
+```bash
+nano frag_monitor.sh
+```
+lalu edit shell :
+```bash
+
 
 ## 3. dsotm.sh
 Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat.
