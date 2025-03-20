@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/eff44492-580d-478f-bc60-55fa9bec1b2e)# Sisop-1-2025-IT34
+![image](https://github.com/user-attachments/assets/eff44492-580d-478f-bc60-55fa9bec1b2e)
+# Sisop-1-2025-IT34
 
 <div align=center>
 
@@ -268,11 +269,13 @@ Hal yang harus ada di fungsionalitas menu:
 Add/Remove CPU [Core] Usage
 Add/Remove RAM [Fragment] Usage
 View Active Jobs
-Lokasi shell script: ./scripts/manager.sh
+Lokasi shell script: `./scripts/manager.sh`
 
 untuk itu pertama membuat shell manager.sh
 dan edit dengan kode dibawah ini :
 ```bash
+
+```
 
 
 
