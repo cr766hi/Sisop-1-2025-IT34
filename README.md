@@ -313,7 +313,7 @@ Jalankan perintah untuk menampilkan outputnya
 ```bash
 ./pokemon_analysis.sh pokemon_usage.csv --info
 ```
-maka akan menghasilkan output :
+### Output :
 ![image](https://github.com/user-attachments/assets/e31bd67f-04ce-4832-92c4-ffd96f6d117e)
 
 ### b. Mengurutkan Pokemon berdasarkan data kolom
@@ -374,7 +374,7 @@ Jalankan perintah untuk menampilkan outputnya
 ```bash
 ./pokemon_analysis.sh pokemon_usage.csv --info
 ```
-maka akan menghasilkan output :
+### Output :
 ![image](https://github.com/user-attachments/assets/138313a8-d36b-4955-b82c-8912502bc4a2)
 
 ### c. Mencari nama Pokemon tertentu
@@ -403,7 +403,7 @@ Jalankan perintah untuk menampilkan outputnya
 ```bash
 ./pokemon_analysis.sh pokemon_usage.csv --grep <nama pokemon>
 ```
-maka akan menghasilkan output :
+### Output :
 ![image](https://github.com/user-attachments/assets/b11d07c7-b698-4caa-9408-f125967c1816)
 
 ### d. Mencari Pokemon berdasarkan filter nama type
@@ -430,7 +430,7 @@ Jalankan perintah untuk menampilkan outputnya
 ```bash
 ./pokemon_analysis.sh pokemon_usage.csv --grep <type pokemon>
 ```
-maka akan menghasilkan output :
+### Output :
 ![image](https://github.com/user-attachments/assets/afbbcddf-107a-4cda-bb69-e0c78a01ffb5)
 
 ### e. Error handling
@@ -452,7 +452,7 @@ Jalankan perintah untuk menampilkan outputnya(coba asal)
 ```bash
 ./pokemon_analysis.sh pokemon_usage.csv --kmlkm
 ```
-maka akan menghasilkan output :
+### Output :
 ![image](https://github.com/user-attachments/assets/b7e97656-2194-43bc-88ca-c2290743100e)
 
 ### f. Help screen yang menarik
