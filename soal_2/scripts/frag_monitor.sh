@@ -1,18 +1,13 @@
 #!/bin/bash
 
-echo "=== Arcaea Fragments Monitoring ==="
+LOG_FILE="./logs/fragment.log"
+TIMESTAMP=$(date "+[%Y-%m-%d %H:%M:%S]")
 
-TOTAL_RAM=$(grep "MemTotal" /proc/meminfo | awk '{print $2}')
-AVAILABLE_RAM=$(grep "MemAvailable" /proc/meminfo | awk '{print $2}')
+# Ambil total dan penggunaan RAM dalam MB
+TOTAL_RAM=$(free -m | awk '/Mem:/ {print $2}')
+USED_RAM=$(free -m | awk '/Mem:/ {print $3}')
+AVAILABLE_RAM=$(free -m | awk '/Mem:/ {print $7}')
+RAM_USAGE=$(awk "BEGIN {print ($USED_RAM/$TOTAL_RAM)*100}")
 
-USED_RAM=$((TOTAL_RAM - AVAILABLE_RAM))
-
-TOTAL_RAM_MB=$((TOTAL_RAM / 1024))
-USED_RAM_MB=$((USED_RAM / 1024))
-
-RAM_USAGE_PERCENT=$((USED_RAM * 100 / TOTAL_RAM))
-
-echo " Total RAM    : ${TOTAL_RAM_MB} MB"
-echo " RAM Usage    : ${USED_RAM_MB} MB (${RAM_USAGE_PERCENT}%)"
-
-exit 0
+# Simpan log dengan format yang sesuai
+echo "$TIMESTAMP -- Fragment Usage [$(printf "%.2f" "$RAM_USAGE")%] -- Fragment Count [${USED_RAM}.00 MB] -- Details [Total: ${TOTAL_RAM} MB, Available: ${AVAILABLE_RAM} MB]" >> "$LOG_FILE"
