@@ -1,8 +1,8 @@
 # Sisop-1-2025-IT34
 Member :
-Aldo
-Danis
-Naila
+1. Christiano Ronaldo Silalahi (5027241025)
+2. Naila Cahyarani Idelia (5027241063)
+3. Daniswara Fausta Novanto (5027241050)
 
 <div align=center>
 
