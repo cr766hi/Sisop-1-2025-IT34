@@ -10,7 +10,7 @@ Member :
 
 </div>
 
-## 1. poppo_siroyo.sh
+## Soal 1
 Di sebuah desa kecil yang dikelilingi bukit hijau, Poppo dan Siroyo, dua sahabat karib, sering duduk di bawah pohon tua sambil membayangkan petualangan besar. Poppo, yang ceria dan penuh semangat, baru menemukan kesenangan dalam dunia buku, sementara Siroyo, dengan otaknya yang tajam, suka menganalisis segala hal. Suatu hari, mereka menemukan tablet ajaib berisi catatan misterius bernama reading_data.csv. Dengan bantuan keajaiban awk, mereka memutuskan untuk menjelajahi rahasia di balik data itu, siap menghadapi tantangan demi tantangan dalam petualangan baru mereka.
 
 ```bash
@@ -101,7 +101,7 @@ awk 'BEGIN {FS=","; hitung_max=0}
 ### Output :
 ![Screenshot 2025-03-14 155958](https://github.com/user-attachments/assets/c6134ffb-c3b1-4dd8-9f01-936daf261cba)
 
-## 2. Anda merupakan seorang “Observer”
+## Soal 2
 Dari banyak dunia yang dibuat dari ingatan yang berbentuk “fragments” - yang berisi kemungkinan yang dapat terjadi di dunia lain. Namun, akhir-akhir ini terdapat anomali-anomali yang seharusnya tidak terjadi, perpindahan “fragments” di berbagai dunia, yang kemungkinan terjadi dikarenakan seorang “Seeker” yang berubah menjadi “Ascendant”, atau dalam kata lain, “God”. Tidak semua “Observer” menjadi “Player”, tetapi disini anda ditugaskan untuk ikut serta dalam menjaga equilibrium dari dunia-dunia yang terbuat dari “Arcaea”.
 
 ### a. “First Step in a New World”
@@ -486,7 +486,7 @@ show_menu
 ### Output
 
 
-## 3. dsotm.sh
+## Soal 3
 Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat.
 
 ```bash
@@ -592,7 +592,7 @@ jam() {
 
 Untuk bagian D dan E masih belum selesai dikarenakan ketidakpahaman
 
-## 4. pokemon_analysis.sh
+## Soal 4
 Pada suatu hari, anda diminta teman anda untuk membantunya mempersiapkan diri untuk turnamen Pokemon “Generation 9 OverUsed 6v6 Singles” dengan cara membuatkan tim yang cocok untuknya. Tetapi, anda tidak memahami meta yang dimainkan di turnamen tersebut. Untungnya, seorang informan memberikan anda data pokemon_usage.csv yang bisa anda download dan analisis. 
 [Author: Amoes / winter]
 Data tersebut memiliki banyak kolom:
