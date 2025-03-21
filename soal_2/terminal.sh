@@ -29,14 +29,14 @@ show_menu() {
     while true; do
         clear
         echo "╔════════════════════════════════════════════════════╗"
-        echo "║                  🌌 ARCAEA TERMINAL 🌌              ║"
+        echo "║                  🌌 ARCAEA TERMINAL 🌌            ║"
         echo "╠════╦══════════════════════════════════════════════╣"
         echo "║ ID ║ OPTION                                       ║"
         echo "╠════╬══════════════════════════════════════════════╣"
         echo "║  1 ║ ➕ Register New Account                      ║"
-        echo "║  2 ║ 🔑 Login to Existing Account               ║"
-        echo "║  3 ║ ⚙️  Crontab Manager (Core & Fragments)      ║"
-        echo "║  4 ║ 🚪 Exit Arcaea Terminal                     ║"
+        echo "║  2 ║ 🔑 Login to Existing Account                 ║"
+        echo "║  3 ║ ⚙️  Crontab Manager (Core & Fragments)       ║"
+        echo "║  4 ║ 🚪 Exit Arcaea Terminal                      ║"
         echo "╚════╩══════════════════════════════════════════════╝"
         read -p "Enter option [1-4]: " choice
 
