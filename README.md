@@ -292,7 +292,6 @@ Dengan lokasi shell script: `./scripts/manager.sh`
 ### h. “The Disfigured Flow of Time”
 Karena tentunya script yang dimasukkan ke crontab tidak mengeluarkan output di terminal, buatlah 2 log file, core.log dan fragment.log di folder ./log/, yang dimana masing-masing terhubung ke program usage monitoring untuk usage tersebut.
 
-Format log:
 CPU
 [YYYY-MM-DD HH:MM:SS] - Core Usage [$CPU%] - Terminal Model [$CPU_Model]
 
