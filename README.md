@@ -413,9 +413,6 @@ RAM_USAGE=$(awk "BEGIN {print ($USED_RAM/$TOTAL_RAM)*100}")
 echo "$TIMESTAMP -- Fragment Usage [$(printf "%.2f" "$RAM_USAGE")%] -- Fragment Count [${USED_RAM}.00 MB] -- Details [Total: ${TOTAL_RAM} MB, Available: ${AVAILABLE_RAM} MB]" >> "$LOG_FILE"
 ```
 
-### Output
-
-
 ### i. “Irruption of New Color”
 Sistem harus memiliki antarmuka utama yang menggabungkan semua komponen. Ini akan menjadi titik masuk bagi "Player" untuk mengakses seluruh sistem. 
 Dalam shell script tersebut berisi user flow berikut:
