@@ -1,5 +1,8 @@
-![image](https://github.com/user-attachments/assets/eff44492-580d-478f-bc60-55fa9bec1b2e)
 # Sisop-1-2025-IT34
+Member :
+Aldo
+Danis
+Naila
 
 <div align=center>
 
@@ -380,10 +383,34 @@ CPU
 RAM
 [YYYY-MM-DD HH:MM:SS] - Fragment Usage [$RAM%] - Fragment Count [$RAM MB] - Details [Total: $TOTAL MB, Available: $AVAILABLE MB]
 
-Edit dengan kode dibawah ini :
+Berikut adalah kode untuk core monitor :
 
 ```bash
+#!/bin/bash
 
+LOG_FILE="./logs/core.log"
+TIMESTAMP=$(date "+[%Y-%m-%d %H:%M:%S]")
+
+CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+CPU_MODEL=$(lscpu | grep "Model name" | sed -E 's/Model name:\s+//')
+
+echo "$TIMESTAMP -- Core Usage [$(printf "%.5f" "$CPU_USAGE")%] -- Terminal Model [$CPU_MODEL]" >> "$LOG_FILE"
+```
+
+Berikut adalah kode untuk fragment monitor :
+
+```bash
+#!/bin/bash
+
+LOG_FILE="./logs/fragment.log"
+TIMESTAMP=$(date "+[%Y-%m-%d %H:%M:%S]")
+
+TOTAL_RAM=$(free -m | awk '/Mem:/ {print $2}')
+USED_RAM=$(free -m | awk '/Mem:/ {print $3}')
+AVAILABLE_RAM=$(free -m | awk '/Mem:/ {print $7}')
+RAM_USAGE=$(awk "BEGIN {print ($USED_RAM/$TOTAL_RAM)*100}")
+
+echo "$TIMESTAMP -- Fragment Usage [$(printf "%.2f" "$RAM_USAGE")%] -- Fragment Count [${USED_RAM}.00 MB] -- Details [Total: ${TOTAL_RAM} MB, Available: ${AVAILABLE_RAM} MB]" >> "$LOG_FILE"
 ```
 
 ### Output
@@ -398,10 +425,62 @@ Dalam shell script tersebut berisi user flow berikut:
     - Exit
 - Exit
 
-Edit dengan kode dibawah ini :
+Di terminal.sh, untuk player melakukan registrasi dan login.
 
 ```bash
+#!/bin/bash
 
+DATA_FILE="./data/player.csv"
+LOG_DIR="./logs"
+SCRIPTS_DIR="./scripts"
+
+mkdir -p "$LOG_DIR"
+mkdir -p "$(dirname "$DATA_FILE")"
+
+register() {
+    bash "$SCRIPTS_DIR/register.sh"
+}
+
+login() {
+    bash "$SCRIPTS_DIR/login.sh"
+    if [ $? -eq 0 ]; then
+        crontab_manager
+    else
+        echo "Login failed. Returning to main menu..."
+        sleep 1
+    fi
+}
+
+crontab_manager() {
+    bash "$SCRIPTS_DIR/manager.sh"
+}
+
+show_menu() {
+    while true; do
+        clear
+        echo "╔════════════════════════════════════════════════════╗"
+        echo "║                  🌌 ARCAEA TERMINAL 🌌            ║"
+        echo "╠════╦══════════════════════════════════════════════╣"
+        echo "║ ID ║ OPTION                                       ║"
+        echo "╠════╬══════════════════════════════════════════════╣"
+        echo "║  1 ║ ➕ Register New Account                      ║"
+        echo "║  2 ║ 🔑 Login to Existing Account                 ║"
+        echo "║  3 ║ ⚙️  Crontab Manager (Core & Fragments)       ║"
+        echo "║  4 ║ 🚪 Exit Arcaea Terminal                      ║"
+        echo "╚════╩══════════════════════════════════════════════╝"
+        read -p "Enter option [1-4]: " choice
+
+        case $choice in
+            1) register ;;
+            2) login ;;
+            3) crontab_manager ;;
+            4) echo "Exiting Arcaea Terminal. Goodbye!"; exit 0 ;;
+            *) echo "❌ Invalid option! Please choose between 1-4."; sleep 1 ;;
+        esac
+    done
+}
+
+show_menu
 ```
 
 ### Output
