@@ -391,13 +391,6 @@ Edit dengan kode dibawah ini :
 
 ### i. “Irruption of New Color”
 Sistem harus memiliki antarmuka utama yang menggabungkan semua komponen. Ini akan menjadi titik masuk bagi "Player" untuk mengakses seluruh sistem. 
-
-Buat shell script `terminal.sh`
-
-```bash
-
-```
-
 Dalam shell script tersebut berisi user flow berikut:
 - Register
 - Login
